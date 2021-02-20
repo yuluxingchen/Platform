@@ -1,0 +1,139 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>注册</title>
+
+    <link href="/images/dream.jpg" rel="icon">
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/body.css" rel="stylesheet">
+    <link href="/css/form.css" rel="stylesheet">
+
+</head>
+
+<body>
+<!--通用顶部-->
+<div id="head"></div>
+<!--通用顶部 结束-->
+
+<!-- 注册界面 -->
+<div class="container">
+    <div class="alert alert-danger hide" id="pwdcheck" style="width:300px;margin:0 auto;">
+        <button class="close" data-dismiss="alert" type="button">&times;</button>
+        密码长度必须在6-18位之间!
+    </div>
+    <div class="alert alert-danger hide" id="failed" style="width:300px;margin:0 auto;">
+        <button class="close" data-dismiss="alert" type="button">&times;</button>
+        注册失败!
+    </div>
+    <form class="form-signin">
+        <h2 class="form-signin-heading">注册</h2>
+        <label class="sr-only" for="name">昵称</label>
+        <input autofocus class="form-control" id="name"
+               placeholder="Name" required type="text">
+        <label class="sr-only" for="inputEmail">邮箱地址</label>
+        <input autofocus class="form-control" id="inputEmail"
+            placeholder="Email address" required type="email">
+        <label class="sr-only" for="inputPassword1">密码</label>
+        <input autofocus class="form-control" id="inputPassword1"
+               placeholder="Password1" required type="password">
+        <label class="sr-only" for="inputPassword2">确认密码</label>
+        <input autofocus class="form-control" id="inputPassword2"
+               placeholder="Password2" required type="password">
+        <button class="btn btn-lg btn-primary btn-block" id="btn_regist" type="button">提交</button>
+    </form>
+</div>
+<!-- 注册界面 结束-->
+
+<!--通用底部-->
+<div id="footer"></div>
+<!--通用底部 结束-->
+
+<!-- 核心JS代码 -->
+<script src="/js/jquery-3.5.1.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/common.js"></script>
+<script>
+    //检查邮箱格式
+    function checkEmail() {
+        var myemail = $("#inputEmail").val();
+        var myReg = /^[a-zA-Z0-9_-]+@([a-zA-Z0-9]+\.)+(com|cn|net|org)$/;
+
+        if (myReg.test(myemail)) {
+            $("#inputEmail").css("border", "1px solid green");
+            return true;
+        } else {
+            $("#inputEmail").css("border", "1px solid red");
+            return false;
+        }
+    }
+
+    //检查密码(6-18位)
+    function checkPwd1() {
+        var pwd = $("#inputPassword1").val();
+        if (pwd.length >= 6 && pwd.length <= 18) {
+            $("#inputPassword1").css("border", "1px solid green");
+            return true;
+        } else {
+            $("#inputPassword1").css("border", "1px solid red");
+            return false;
+        }
+    }
+
+    //检查确认密码
+    function checkPwd2() {
+        var pwd1 = $("#inputPassword1").val();
+        var pwd2 = $("#inputPassword2").val();
+        if (pwd1 == pwd2) {
+            $("#inputPassword2").css("border", "1px solid green");
+            return true;
+        } else {
+            $("#inputPassword2").css("border", "1px solid red");
+            return false;
+        }
+    }
+
+    //添加离焦事件
+    $(function () {		//jQuery入口函数，表示整个页面加载完毕
+        //为邮箱输入框添加离焦事件
+        $("#inputEmail").blur(function () {
+            checkEmail();
+        })
+        //为密码输入框添加离焦事件
+        $("#inputPassword1").blur(function () {
+            checkPwd1();
+        })
+        //为密码确认框添加离焦事件
+        $("#inputPassword2").blur(function () {
+            checkPwd2();
+        })
+    })
+
+    //为登录按钮添加点击事件
+    $("#btn_regist").click(function () {
+        if (checkEmail() && checkPwd1() && checkPwd2()) {					//验证通过提交数据到后台
+            //向服务器发送ajax请求
+            $.ajax({
+                url: "/user/register",		//处理请求的Servlet地址
+                data: {"username": $("#name").val(),"emailname": $("#inputEmail").val(), "password": $("#inputPassword2").val()}, 	//传给Servlet数据
+                type: "post",	//请求方式是get还是post
+                success: function (data) {	//服务器相应数据
+                    $("#pwdcheck").addClass("hide");
+                    if (data.flag == true) {
+                        $("#failed").addClass("hide");
+                        //注册成功跳转到登录页面
+                        window.location.href = "login.html";
+                    } else {
+                        $("#failed").removeClass("hide");
+                    }
+                }
+            })
+        } else {						//验证不通过
+            $("#failed").addClass("hide");
+            $("#pwdcheck").removeClass("hide");
+        }
+    })
+</script>
+</body>
+</html>
