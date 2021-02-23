@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.fenghen.test.DBUtilsTest
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.378 sec
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.416 sec

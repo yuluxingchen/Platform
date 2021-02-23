@@ -1,7 +1,10 @@
 package com.fenghen.test;
 
+import com.fenghen.dao.UserDao;
+import com.fenghen.dao.impl.UserDaoImpl;
 import com.fenghen.pojo.User;
 import com.fenghen.utils.DateUtil;
+import com.fenghen.utils.IDUtil;
 import com.fenghen.utils.JDBCUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
@@ -80,6 +83,50 @@ public class DBUtilsTest {
         try {
             Long count = runner.query(sql, new ScalarHandler<>());
             System.out.println(count);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    @Test
+    public void test6() {
+        //创建一个Runner对象
+        QueryRunner runner = new QueryRunner(JDBCUtils.getDataSource());
+
+        //插入操作
+        String sql = "insert into post(tID,uid,uName,tTitle,tContents,tTime) values(?,?,?,?,?,?)";
+        String tid = "A" + IDUtil.MakeID();
+        Date date = new Date();
+        try {
+            runner.update(sql, tid, "1", "qianhuan", "1", "123", DateUtil.DatetoString(date));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    @Test
+    public void test7() {
+        //创建一个Runner对象
+        QueryRunner runner = new QueryRunner(JDBCUtils.getDataSource());
+
+        //修改操作
+        String sql = "update post set tContents = ? where tTitle = ? and uName = ? ";
+        try {
+            runner.update(sql, "456", "1", "qianhuan");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    @Test
+    public void test8() {
+        //创建一个Runner对象
+        QueryRunner runner = new QueryRunner(JDBCUtils.getDataSource());
+
+        //修改操作
+        String sql = "delete from post where tTitle = ? and uName = ? ";
+        try {
+            runner.update(sql,  "1", "qianhuan");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

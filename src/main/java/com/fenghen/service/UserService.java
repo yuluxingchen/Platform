@@ -4,7 +4,9 @@ import com.fenghen.pojo.User;
 
 public interface UserService {
 
+    //登陆操作
     User login(String emailname, String pwd);
 
-    boolean regist(User user);
+    //注册操作
+    String regist(User user);
 }

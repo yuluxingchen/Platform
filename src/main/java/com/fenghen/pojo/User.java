@@ -2,8 +2,8 @@ package com.fenghen.pojo;
 
 import java.util.Date;
 
-public class User implements java.io.Serializable {
-    private Integer id;
+public class User {
+    private String id;
     private String username;
     private String emailname;
     private String password;
@@ -20,11 +20,11 @@ public class User implements java.io.Serializable {
                 '}';
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -1,9 +1,9 @@
+com\fenghen\utils\UuidUtil.class
+com\fenghen\pojo\User.class
+com\fenghen\web\servlet\BaseServlet.class
 com\fenghen\web\servlet\SearchServlet.class
 com\fenghen\web\filter\CharchaterFilter.class
 com\fenghen\common\Result.class
 com\fenghen\web\servlet\UserServlet.class
-com\fenghen\utils\UuidUtil.class
 com\fenghen\utils\JedisUtil.class
-com\fenghen\pojo\User.class
 com\fenghen\utils\JDBCUtils.class
-com\fenghen\web\servlet\BaseServlet.class

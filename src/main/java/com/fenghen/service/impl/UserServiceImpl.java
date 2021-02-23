@@ -16,15 +16,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean regist(User user) {
+    public String regist(User user) {
         //判断邮箱是否存在
         User email = userDao.findByEmail(user.getEmailname());
         if(email != null){      //如果存在返回false表示不为空
-            return false;
+            return "EmailNotNull";
+        }
+
+        User name = userDao.findByUsername(user.getUsername());
+        if(name != null){
+            return "UsernameNotNull";
         }
 
         //如果不存在则添加一个
         userDao.add(user);
-        return true;
+        return "Success";
     }
 }

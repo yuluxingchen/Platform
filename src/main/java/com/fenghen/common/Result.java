@@ -8,9 +8,7 @@ public class Result implements Serializable {
     private String msg;     //发生异常的错误信息
 
     //无参构造方法
-    public Result() {
-
-    }
+    public Result() {}
 
     //有参构造
     public Result(Boolean flag) {

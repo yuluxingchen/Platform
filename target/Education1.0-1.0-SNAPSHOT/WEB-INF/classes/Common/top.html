@@ -18,14 +18,14 @@
                 <!-- 设置ul为导航条组件内的列表元素 -->
                 <ul class="nav navbar-nav nav-left">
                     <li><a href="/index.html">首页</a></li>
-                    <li><a href="/main/ladder.html">天梯</a></li>
-                    <li><a href="/main/forum.html">论坛</a></li>
+                    <li><a href="/Home/ladder.html">天梯</a></li>
+                    <li><a href="/Home/forum.html">论坛</a></li>
                     <li class="dropdown">
                         <a aria-expanded="false" aria-haspopup="true"
                            class="dropdown-toggle" data-toggle="dropdown" href="#"
                            role="button">知识库 <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">天文</a></li>
+                            <li><a href="/Library/Astronomy.html">天文</a></li>
                             <li><a href="#">计算机</a></li>
                             <li><a href="#">地理</a></li>
                             <li><a href="#">历史</a></li>
@@ -39,17 +39,17 @@
                 <form class="navbar-form navbar-left">
                     <div class="form-group">
                         <label>
-                            <input class="form-control" placeholder="Search" type="text">
+                            <input class="form-control" id="searchpost" placeholder="搜索文章标题" type="text"/>
                         </label>
                     </div>
-                    <button class="btn btn-default btn-sample" type="submit">搜索</button>
+                    <button class="btn btn-default btn-sample" id="btn_search">搜索</button>
                 </form>
 
                 <!-- 登录与注册 -->
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="/UserInfo/home.html" id="nickname"></a></li>
-                    <li><a href="/main/register.html" id="regist">注册</a></li>
-                    <li><a href="/main/login.html" id="login">登录</a></li>
+                    <li><a href="/Home/register.html" id="regist"></a></li>
+                    <li><a href="/Home/login.html" id="login"></a></li>
                 </ul>
             </div>
             <!--/.nav-collapse -->
@@ -61,26 +61,9 @@
 <script>
     //显示导航所在位置
     $("#navbar").find('a').each(function () {
-        if (this.href == document.location.href || document.location.href.search(this.href) >= 0) {
-            $(this).parent().addClass('active'); // this.className = ‘active‘;
+        if (this.href === document.location.href || document.location.href.search(this.href) >= 0) {
+            $(this).parent().addClass('active');
         }
-    });
-
-    //页面加载完毕后
-    $(function (){
-        //$("#nickname").hide();
-        //页面加载完毕后立即发送ajax请求，获取用户昵称
-        $.ajax({
-            url:"/user/findUserNickName",
-            type:"get",
-            dataType:"json",
-            success:function(data){
-                if(data.data != null){
-                    $("#nickname").html(data.data.username);
-                    $("#regist").hide();
-                    $("#login").hide();
-                }
-            }
-        })
     })
+
 </script>

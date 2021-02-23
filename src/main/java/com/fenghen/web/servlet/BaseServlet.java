@@ -19,7 +19,7 @@ public class BaseServlet extends HttpServlet {
         //2、获取子类中对应的方法
         try {
             Method method = clz.getMethod(methodName, HttpServletRequest.class, HttpServletResponse.class);
-            method.invoke(this,request,response);
+            method.invoke(this, request, response);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
