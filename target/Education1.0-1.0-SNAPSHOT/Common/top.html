@@ -61,7 +61,7 @@
 <script>
     //显示导航所在位置
     $("#navbar").find('a').each(function () {
-        if (this.href === document.location.href || document.location.href.search(this.href) >= 0) {
+        if (this.href === document.location.href) {
             $(this).parent().addClass('active');
         }
     })
