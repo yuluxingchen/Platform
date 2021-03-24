@@ -1,0 +1,50 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>论坛</title>
+    <link href="/images/dream.jpg" rel="icon">
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/body.css" rel="stylesheet">
+</head>
+<body>
+<!--通用顶部-->
+<div id="head"></div>
+<!--通用顶部 结束-->
+
+<div class="container-fluid" style="margin: 30px;">
+    <div id="result"></div>
+</div>
+
+<!--通用底部-->
+<div id="footer"></div>
+<!--通用底部 结束-->
+
+<!-- 核心JS代码 -->
+<script src="/js/jquery-3.5.1.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/getusername.js"></script>
+<script>
+    $(function () {
+        //页面加载完毕后立即向后台发送ajax请求
+        $.ajax({
+            url: "/article/allpost",
+            data: null, 	//传给Servlet数据
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                var ls = data.data;
+                var html = "";
+                console.log(123);
+                for (var i = 0; i < data.data.length; i++) {
+                    var title = ls[i].tTitle;
+                    var name = ls[i].uName;
+                    html += "<li>标题：" + title + " 作者：" + name + "</li>"
+                }
+                $("#result").html(html);
+            }
+        });
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>登录</title>
+
+    <link href="/images/dream.jpg" rel="icon">
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/body.css" rel="stylesheet">
+    <link href="/css/form.css" rel="stylesheet">
+</head>
+
+<body>
+<!-- 通用顶部 -->
+<div id="head"></div>
+<!-- 通用顶部 结束 -->
+
+<div class="container">
+    <div class="alert alert-danger hide" id="pwdcheck" style="width:300px;margin:0 auto;">
+        <button class="close" data-dismiss="alert" type="button">&times;</button>
+        邮箱格式或密码长度不正确，密码长度必须在6-18位之间!
+    </div>
+    <div class="alert alert-danger hide" id="failed" style="width:300px;margin:0 auto;">
+        <button class="close" data-dismiss="alert" type="button">&times;</button>
+        邮箱或密码不正确!
+    </div>
+    <!--<div align="center" style="margin:0 auto;">
+        <img class="mb-4" src="images/dream.jpg" alt="logo" width="300px" height="100px" >
+    </div>-->
+    <form class="form-signin" id="loginForm">
+        <h2 class="form-signin-heading">请登录</h2>
+        <label class="sr-only" for="inputEmail">邮箱地址</label>
+        <input
+                autofocus class="form-control" id="inputEmail" name="Email"
+                placeholder="Email address" required type="email">
+        <label class="sr-only" for="inputPassword">密码 </label>
+        <input
+                class="form-control" id="inputPassword" name="Password" placeholder="Password"
+                required type="password">
+
+        <div class="custom-control custom-checkbox" style="float: left">
+            <input class="custom-control-input" id="check1" type="checkbox">
+            <label class="custom-control-label"
+                   for="check1">自动登录&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+        </div>
+        <div class="custom-control custom-checkbox" style="float: left">
+            <input class="custom-control-input" id="check2" type="checkbox">
+            <label class="custom-control-label"
+                   for="check2">记住密码&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+        </div>
+        <div class="custom-control custom-checkbox" style="float: left">
+            <a href="#">找回密码</a>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" id="btn_login" type="button">登录</button>
+    </form>
+
+    <div style="text-align:center;">
+        <small>没有账号?</small><a class="signup" href="/Home/register.html">&nbsp;注册</a>
+    </div>
+</div>
+<!-- /container -->
+
+<!--通用底部-->
+<div id="footer"></div>
+<!--通用底部 结束-->
+
+<!-- 核心JS代码 -->
+<script src="/js/jquery-3.5.1.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/getusername.js"></script>
+<script>
+    //检查邮箱格式
+    function checkEmail() {
+        var myemail = $("#inputEmail").val();
+        var myReg = /^[a-zA-Z0-9_-]+@([a-zA-Z0-9]+\.)+(com|cn|net|org)$/;
+
+        if (myReg.test(myemail)) {
+            $("#inputEmail").css("border", "1px solid green");
+            return true;
+        } else {
+            $("#inputEmail").css("border", "1px solid red");
+            return false;
+        }
+    }
+
+    //检查密码(6-18位)
+    function checkPwd() {
+        var pwd = $("#inputPassword").val();
+        if (pwd.length >= 6 && pwd.length <= 18) {
+            $("#inputPassword").css("border", "1px solid green");
+            return true;
+        } else {
+            $("#inputPassword").css("border", "1px solid red");
+            return false;
+        }
+    }
+
+    //添加离焦事件
+    $(function () {		//jQuery入口函数，表示整个页面加载完毕
+        //为邮箱输入框添加离焦事件
+        $("#inputEmail").blur(function () {
+            checkEmail();
+        })
+        //为密码输入框添加离焦事件
+        $("#inputPassword").blur(function () {
+            checkPwd();
+        })
+    })
+
+    //为登录按钮添加点击事件
+    $("#btn_login").click(function () {
+        if (checkPwd() && checkEmail()) {					//验证通过提交数据到后台
+            //向服务器发送ajax请求
+            $.ajax({
+                url: "/user/login",		//处理请求的Servlet地址
+                data: {
+                    "emailname": $("#inputEmail").val(),
+                    "pwd": $("#inputPassword").val()
+                }, 	//传给Servlet数据
+                type: "post",	//请求方式是get还是post
+                success: function (data) {	//服务器相应数据
+                    $("#pwdcheck").addClass("hide");
+                    if (data.flag === true) {
+                        $("#failed").addClass("hide");
+                        //登陆成功跳转到首页
+                        window.location.href = "/index.html";
+                    } else {
+                        $("#failed").removeClass("hide");
+                    }
+                }
+            })
+        } else {						//验证不通过
+            $("#failed").addClass("hide");
+            $("#pwdcheck").removeClass("hide");
+        }
+    })
+</script>
+</body>
+</html>
