@@ -69,7 +69,6 @@
 <script src="/js/jquery-3.5.1.js"></script>
 <script src="/js/bootstrap.js"></script>
 <script src="/js/common.js"></script>
-<script src="/js/search.js"></script>
 <script src="/js/getusername.js"></script>
 <script>
     //检查邮箱格式
@@ -116,7 +115,10 @@
             //向服务器发送ajax请求
             $.ajax({
                 url: "/user/login",		//处理请求的Servlet地址
-                data: {"emailname": $("#inputEmail").val(), "pwd": $("#inputPassword").val()}, 	//传给Servlet数据
+                data: {
+                    "emailname": $("#inputEmail").val(),
+                    "pwd": $("#inputPassword").val()
+                }, 	//传给Servlet数据
                 type: "post",	//请求方式是get还是post
                 success: function (data) {	//服务器相应数据
                     $("#pwdcheck").addClass("hide");

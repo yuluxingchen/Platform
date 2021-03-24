@@ -5,8 +5,10 @@ import com.fenghen.common.Result;
 import com.fenghen.dao.UserDao;
 import com.fenghen.dao.impl.UserDaoImpl;
 import com.fenghen.pojo.Article;
+import com.fenghen.pojo.User;
 import com.fenghen.service.ArticleService;
 import com.fenghen.service.impl.ArticleServiceImpl;
+import com.fenghen.utils.IDUtil;
 import org.apache.commons.beanutils.BeanUtils;
 
 import javax.servlet.*;
@@ -32,15 +34,24 @@ public class ArticleServlet extends BaseServlet {
 
         Article article = new Article();
 
-        //将传回的值赋给指定对象
         try {
             BeanUtils.populate(article,parameterMap);
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
 
+        String tid = "A" + IDUtil.MakeID();
+        UserDao userDao = new UserDaoImpl();
+        User user = userDao.findByUsername(article.getuName());
+
+        article.settID(tid);
+        article.setuID(user.getId());
+
+        //将传回的值赋给指定对象
+
+        System.out.println("A"+article);
         //设置文章的发布时间
-        article.setDate(new Date());
+        article.settTime(new Date());
 
         //调用业务层完成添加的任务
         boolean flag = articleService.Add(article);
@@ -69,12 +80,6 @@ public class ArticleServlet extends BaseServlet {
         //获取前端传回的值
         Map<String,String[]> parameterMap = request.getParameterMap();
 
-        for(Map.Entry<String, String[]> entry : parameterMap.entrySet()){
-            String mapKey = entry.getKey();
-            String[] mapValue = entry.getValue();
-            System.out.println(mapKey+":"+ Arrays.toString(mapValue));
-        }
-
         Article article = new Article();
 
         //将传回的值赋给指定对象
@@ -85,7 +90,32 @@ public class ArticleServlet extends BaseServlet {
         }
 
         //调用业务层完成添加的任务
-        List<Article> data = articleService.QueryByTitle(article.getTitle());
+        List<Article> data = articleService.QueryByTitle(article.gettTitle());
+
+        //根据查询结果返回对应消息
+        Result result = new Result();
+        if(data != null){
+            result.setFlag(true);
+            result.setData(data);
+        }else{
+            result.setFlag(false);
+            result.setMsg("文章不存在");
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        String resultJson = mapper.writeValueAsString(result);
+        out.print(resultJson);
+    }
+
+    public void allpost(HttpServletRequest request, HttpServletResponse response)throws IOException {
+        //如果前台的数据很多时，可使用BeanUtils.Populate()方法快速获取表中数据
+        //封装到实体对象中，前提要保存表单数据的名字和实体对象属性名一致
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+
+        //调用业务层完成添加的任务
+        List<Article> data = articleService.QueryAll();
+
         //根据查询结果返回对应消息
         Result result = new Result();
         if(data != null){

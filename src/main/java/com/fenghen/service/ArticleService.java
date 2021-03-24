@@ -7,6 +7,9 @@ import java.util.List;
 
 public interface ArticleService {
 
+    //查询全部文章
+    List<Article> QueryAll();
+
     //通过文章名和作者进行查询
     Article QueryByTitleAndAuthor(String title, String username);
 

@@ -12,6 +12,12 @@ public class ArticleServiceImpl implements ArticleService {
     ArticleDao articleDao = new ArticleDaoImpl();
 
     @Override
+    public List<Article> QueryAll() {
+        List<Article> articleList = articleDao.findAll();
+        return articleList;
+    }
+
+    @Override
     public Article QueryByTitleAndAuthor(String title, String author) {
         Article article = articleDao.findByTitleAndAuthor(title, author);
         return article;
@@ -29,10 +35,11 @@ public class ArticleServiceImpl implements ArticleService {
         return  articleList;
     }
 
+
     @Override
     public boolean Add(Article article) {
         //判断标题是否存在
-        Article title = articleDao.findByTitleAndAuthor(article.getTitle(), article.getAuthor());
+        Article title = articleDao.findByTitleAndAuthor(article.gettTitle(), article.getuName());
         if(title != null){      //如果存在返回false表示不为空
             return false;
         }
@@ -44,7 +51,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public boolean Modify(Article article) {
         //判断标题是否存在
-        Article title = articleDao.findByTitleAndAuthor(article.getTitle(), article.getAuthor());
+        Article title = articleDao.findByTitleAndAuthor(article.gettTitle(), article.getuName());
         if(title != null){      //如果存在返回false表示不为空
             return false;
         }
@@ -56,7 +63,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public boolean Delete(Article article) {
         //判断标题是否存在
-        Article title = articleDao.findByTitleAndAuthor(article.getTitle(), article.getAuthor());
+        Article title = articleDao.findByTitleAndAuthor(article.gettTitle(), article.getuName());
         if(title != null){      //如果存在返回false表示不为空
             return false;
         }

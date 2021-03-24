@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface ArticleDao {
 
+    List<Article> findAll();
+
     Article findByTitleAndAuthor(String title, String author);
 
     List<Article> findByTitle(String title);

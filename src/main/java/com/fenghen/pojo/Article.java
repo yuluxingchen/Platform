@@ -3,60 +3,110 @@ package com.fenghen.pojo;
 import java.util.Date;
 
 public class Article {
-    private String id;
-    private String author;
-    private String title;
-    private String content;
-    private Date date;
+    private String tID;
+    private String uID;
+    private String uName;
+    private String tTitle;
+    private String tContents;
+    private Date tTime;
+    private Integer tReplyCount;
+    private Integer tClickCount;
+    private Integer tCollectCount;
+    private Integer tLikeCount;
 
     @Override
     public String toString() {
         return "Article{" +
-                "id=" + id +
-                ", author='" + author + '\'' +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", date=" + date +
+                "tID='" + tID + '\'' +
+                ", uID='" + uID + '\'' +
+                ", uName='" + uName + '\'' +
+                ", tTitle='" + tTitle + '\'' +
+                ", tContents='" + tContents + '\'' +
+                ", tTime=" + tTime +
+                ", tReplyCount=" + tReplyCount +
+                ", tClickCount=" + tClickCount +
+                ", tCollectCount=" + tCollectCount +
+                ", tLikeCount=" + tLikeCount +
                 '}';
     }
 
-    public String getId() {
-        return id;
+    public String gettID() {
+        return tID;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void settID(String tID) {
+        this.tID = tID;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getuID() {
+        return uID;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setuID(String uID) {
+        this.uID = uID;
     }
 
-    public String getTitle() {
-        return title;
+    public String getuName() {
+        return uName;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setuName(String uName) {
+        this.uName = uName;
     }
 
-    public String getContent() {
-        return content;
+    public String gettTitle() {
+        return tTitle;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void settTitle(String tTitle) {
+        this.tTitle = tTitle;
     }
 
-    public Date getDate() {
-        return date;
+    public String gettContents() {
+        return tContents;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void settContents(String tContents) {
+        this.tContents = tContents;
+    }
+
+    public Date gettTime() {
+        return tTime;
+    }
+
+    public void settTime(Date tTime) {
+        this.tTime = tTime;
+    }
+
+    public Integer gettReplyCount() {
+        return tReplyCount;
+    }
+
+    public void settReplyCount(Integer tReplyCount) {
+        this.tReplyCount = tReplyCount;
+    }
+
+    public Integer gettClickCount() {
+        return tClickCount;
+    }
+
+    public void settClickCount(Integer tClickCount) {
+        this.tClickCount = tClickCount;
+    }
+
+    public Integer gettCollectCount() {
+        return tCollectCount;
+    }
+
+    public void settCollectCount(Integer tCollectCount) {
+        this.tCollectCount = tCollectCount;
+    }
+
+    public Integer gettLikeCount() {
+        return tLikeCount;
+    }
+
+    public void settLikeCount(Integer tLikeCount) {
+        this.tLikeCount = tLikeCount;
     }
 }

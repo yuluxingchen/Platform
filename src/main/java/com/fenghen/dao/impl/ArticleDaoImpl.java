@@ -18,6 +18,19 @@ public class ArticleDaoImpl implements ArticleDao {
     //访问数据库使用QueryRunner对象来完成
     QueryRunner runner = new QueryRunner(JDBCUtils.getDataSource());
 
+    //查询所有
+    @Override
+    public List<Article> findAll() {
+        String sql = "select * from post";
+        List<Article> articlelist = null;
+        try {
+            articlelist = runner.query(sql, new BeanListHandler<>(Article.class));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return articlelist;
+    }
+
     //通过标题和用户名查找
     @Override
     public Article findByTitleAndAuthor(String title, String author) {
@@ -60,12 +73,9 @@ public class ArticleDaoImpl implements ArticleDao {
     //添加文章
     @Override
     public void add(Article article){
-        String sql = "insert into post(tID,uid,uName,tTitle,tContents,tTime) values(?,?,?,?,?,?)";
-        String tid = "A" + IDUtil.MakeID();
-        UserDao userDao = new UserDaoImpl();
-        User user = userDao.findByUsername(article.getAuthor());
+        String sql = "insert into post(tID,uID,uName,tTitle,tContents,tTime) values(?,?,?,?,?,?)";
         try {
-            runner.update(sql, tid, user.getId(), user.getUsername(), article.getTitle(), article.getContent(), DateUtil.DatetoString(article.getDate()));
+            runner.update(sql, article.gettID(), article.getuID(), article.getuName(), article.gettTitle(), article.gettContents(), DateUtil.DatetoString(article.gettTime()));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -76,7 +86,7 @@ public class ArticleDaoImpl implements ArticleDao {
     public void modify(Article article) {
         String sql = "update post set tContents = ? where tTitle = ? and uName = ? ";
         try {
-            runner.update(sql, article.getContent(), article.getTitle(), article.getAuthor());
+            runner.update(sql, article.gettContents(), article.gettTitle(), article.getuName());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -87,7 +97,7 @@ public class ArticleDaoImpl implements ArticleDao {
     public void delete(Article article) {
         String sql = "delete from post where tTitle = ? and uName = ? ";
         try {
-            runner.update(sql, article.getTitle(), article.getAuthor());
+            runner.update(sql, article.gettTitle(), article.getuName());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

@@ -42,7 +42,7 @@
                             <input class="form-control" id="searchpost" placeholder="搜索文章标题" type="text"/>
                         </label>
                     </div>
-                    <button class="btn btn-default btn-sample" id="btn_search">搜索</button>
+                    <button class="btn btn-default btn-sample" id="btn_search" type="button" value="button" onclick="search()">搜索</button>
                 </form>
 
                 <!-- 登录与注册 -->
@@ -66,4 +66,11 @@
         }
     })
 
+    function search() {
+        //获取搜索框内容
+        var title = $("#searchpost").val();
+        console.log(title);
+        //点击搜索时跳转
+        location.href="/BBS/Glance.html?title=" + title;
+    }
 </script>

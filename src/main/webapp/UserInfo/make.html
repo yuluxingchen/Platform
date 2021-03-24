@@ -50,7 +50,6 @@
 <script src="/js/jquery-3.5.1.js"></script>
 <script src="/js/bootstrap.js"></script>
 <script src="/js/common.js"></script>
-<script src="/js/search.js"></script>
 <script src="/js/getusername.js"></script>
 <script>
     //为登录按钮添加点击事件
@@ -58,7 +57,13 @@
         //向服务器发送ajax请求
         $.ajax({
             url: "/article/makepost",		//处理请求的Servlet地址
-            data: {"title": $("#title").val(),"author": nickname,"content": $("#content").val()}, 	//传给Servlet数据
+            data: {
+                "tID": null,
+                "uID": null,
+                "uName": nickname,
+                "tTitle": $("#title").val(),
+                "tContents": $("#content").val()
+            }, 	//传给Servlet数据
             dataType: "json",
             type: "post",	//请求方式是get还是post
             success: function (data) {	//服务器相应数据
