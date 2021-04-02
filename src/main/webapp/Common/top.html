@@ -48,6 +48,7 @@
                 <!-- 登录与注册 -->
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="/UserInfo/home.html" id="nickname"></a></li>
+                    <li><a href="/index.html" id="logout"></a></li>
                     <li><a href="/Home/register.html" id="regist"></a></li>
                     <li><a href="/Home/login.html" id="login"></a></li>
                 </ul>
@@ -73,4 +74,14 @@
         //点击搜索时跳转
         location.href="/BBS/Glance.html?title=" + title;
     }
+
+    //为登录按钮添加点击事件
+    $("#logout").click(function () {
+        //向服务器发送ajax请求
+        $.ajax({
+            url: "/user/logout",		//处理请求的Servlet地址
+            data: null, 	//传给Servlet数据
+            type: "post",	//请求方式是get还是post
+        })
+    })
 </script>
